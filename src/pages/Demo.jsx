@@ -6,6 +6,18 @@ export const Demo = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
   const { store, dispatch } = useGlobalReducer()
 
+  function deleteContact(indexToDelete){
+    console.log('deleteContact' + indexToDelete)
+    // console.log(store.contacts)
+    // console.log(store.contacts.filter( (elementoContacto,index)=> index != indexToDelete ))
+    // store.contacts = []
+    // console.log(store.contacts)
+    dispatch({
+      type: 'delete_contact',
+      payload: { indexDelete: indexToDelete}
+    })
+  }
+
   return (
     <div className="container">
       <ul className="list-group">
@@ -29,6 +41,24 @@ export const Demo = () => {
                 })}>
                 Change Color
               </button>
+            </li>
+          );
+        })}
+
+
+         {store && store.contacts?.map((item, index) => {
+          return (
+            <li
+              key={index}  // React key for list items.
+              className="list-group-item d-flex justify-content-between"
+              >   
+              <div>
+                <p>index: {index}</p>
+                <p>Name: {item.name}</p>
+                <p>Phone: {item.phone}</p>
+              </div>        
+              <button onClick={()=>deleteContact(index)} >Eliminar {index}</button>    
+                
             </li>
           );
         })}
